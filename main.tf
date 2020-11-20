@@ -13,4 +13,11 @@ resource aws_cloudwatch_metric_alarm this {
   ok_actions                = var.ok_actions
   insufficient_data_actions = var.insufficient_data_actions
   dimensions                = var.dimensions
+
+  tags = merge(
+    {
+      "Name" = "/${var.namespace}/${var.identifier}/${var.metric_name}"
+    },
+    var.tags
+  )
 }
