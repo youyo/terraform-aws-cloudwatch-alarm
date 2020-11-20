@@ -17,6 +17,7 @@ variable namespace {
 variable threshold {
   type        = number
   description = ""
+  default     = 1
 }
 variable comparison_operator {
   type        = string
