@@ -10,28 +10,32 @@ Not supported `metric_query` .
 ## Usage
 
 ```hcl
-module "cloudwatch_alarm" {
+module my_cloudwatch_alarm {
   source = "youyo/cloudwatch-alarm/aws"
 
-  identifier = "my-alarm/prod"
+  namespace   = "AWS/SQS"
+  identifier  = "my-alarm/prod"
+  metric_name = "ApproximateNumberOfMessagesDelayed"
+
   dimensions = {
     QueueName = "my-sqs-name"
   }
-  metric_name = "ApproximateNumberOfMessagesDelayed"
-  namespace          = "AWS/SQS"
-  threshold          = 1
-  comparison_operator = "GreaterThanOrEqualToThreshold"
+
+  period              = 60
+  evaluation_periods  = 10
   datapoints_to_alarm = 2
-  evaluation_periods = 10
-  period = 60
-  statistic = "Average"
-  treat_missing_data = "missing"
-  alarm_actions = ["my-sns-topic-arn"]
-  ok_actions = ["my-sns-topic-arn"]
+  threshold           = 1
+  statistic           = "Average"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  treat_missing_data  = "missing"
+
+  alarm_actions             = ["my-sns-topic-arn"]
+  ok_actions                = ["my-sns-topic-arn"]
   insufficient_data_actions = []
 
   tags = {
     Env = "production"
   }
+
 }
 ```
